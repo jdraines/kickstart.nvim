@@ -1,4 +1,3 @@
--- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
@@ -131,12 +130,13 @@ if vim.fn.has 'nvim' == 1 then
   vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C -n>', { noremap = true })
   vim.keymap.set('t', '<C-t><Esc>', '<Esc>', { noremap = true })
 end
+
+vim.keymap.set('n', 'C-M-T', function()
+  vim.cmd 'vsplit | wincmd |  vertical resize -30 | terminal'
+end, { noremap = true, silent = true })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
-
-if vim.fn.has 'nvim' == 1 then
-  vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
-end
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
