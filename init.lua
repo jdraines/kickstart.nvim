@@ -213,6 +213,14 @@ require('lazy').setup({
       require('luasnip.loaders.from_vscode').lazy_load()
     end,
   },
+
+  {
+    'benomahony/uv.nvim',
+    opts = {
+      picker_integration = true,
+    },
+  },
+
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -644,6 +652,9 @@ require('lazy').setup({
         pyright = {
           capabilities = capabilities,
         },
+        ruff = {
+          capabilities = capabilities,
+        },
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -726,7 +737,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { c = true, cpp = true, py = true }
         if disable_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
