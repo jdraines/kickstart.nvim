@@ -120,6 +120,9 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Close all
+vim.keymap.set('n', 'QQQ', ':qa<CR>', { desc = 'Quit all windows' })
+
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
@@ -333,6 +336,23 @@ require('lazy').setup({
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
+    pickers = {
+      find_files = {
+        follow = true, -- This enables following symlinks, per Gemini
+      },
+      defaults = {
+        vimgrep_requirements = {
+          'rg',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          '-L',
+        },
+      },
+    },
     dependencies = {
       'nvim-lua/plenary.nvim',
       { -- If encountering errors, see telescope-fzf-native README for installation instructions
@@ -993,8 +1013,9 @@ require('lazy').setup({
   },
 })
 
+require('telescope.builtin').find_files { hidden = true }
+
 vim.cmd 'Neotree filesystem reveal left'
-vim.cmd '50vsplit | wincmd L | vertical resize -30 | terminal'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
