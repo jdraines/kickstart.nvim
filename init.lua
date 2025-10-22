@@ -1,4 +1,4 @@
--- See `:help mapleader`
+-- See `:help maplea
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -122,7 +122,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- Close all
 vim.keymap.set('n', 'QQQ', ':qa<CR>', { desc = 'Quit all windows' })
-
+vim.keymap.set('n', 'QQQQQ', ':qa!<CR>', { desc = 'Quit all windows' })
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
@@ -223,7 +223,7 @@ require('lazy').setup({
       picker_integration = true,
     },
   },
-
+  'ojroques/nvim-scrollbar',
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -1016,6 +1016,5 @@ require('lazy').setup({
 require('telescope.builtin').find_files { hidden = true }
 
 vim.cmd 'Neotree filesystem reveal left'
-
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
