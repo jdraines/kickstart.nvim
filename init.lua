@@ -341,7 +341,7 @@ require('lazy').setup({
         follow = true, -- This enables following symlinks, per Gemini
       },
       defaults = {
-        vimgrep_requirements = {
+        vimgrep_arguments = {
           'rg',
           '--color=never',
           '--no-heading',
@@ -349,7 +349,7 @@ require('lazy').setup({
           '--line-number',
           '--column',
           '--smart-case',
-          '-L',
+          '--no-ignore-vcs',
         },
       },
     },
@@ -1013,7 +1013,13 @@ require('lazy').setup({
   },
 })
 
-require('telescope.builtin').find_files { hidden = true }
+-- Create command :cpfp to copy the filepath of the current buffer to clipboard
+vim.api.nvim_create_user_command('Cpfp', function()
+  vim.cmd "let @+ = expand('%:p')"
+end, { desc = 'Copy the filepath of the current buffer to the clipboard' })
+
+require('telescope.builtin').find_files { hidden = true, additional_args = { '--no-ignore' } }
+require('telescope.builtin').live_grep { hidden = true, additional_args = { '--no-ignore' } }
 
 vim.cmd 'Neotree filesystem reveal left'
 -- The line beneath this is called `modeline`. See `:help modeline`
