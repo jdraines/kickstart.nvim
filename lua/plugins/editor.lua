@@ -24,6 +24,7 @@ return {
     'benomahony/uv.nvim',
     opts = {
       picker_integration = true,
+      silent = true, -- Disable activation notifications
     },
   },
 
