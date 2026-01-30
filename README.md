@@ -52,6 +52,7 @@ This makes it easy to:
 | LSP servers (add/remove languages) | `lua/plugins/lsp.lua` |
 | Telescope keymaps (search shortcuts) | `lua/plugins/telescope.lua` |
 | Completion behavior | `lua/plugins/completion.lua` |
+| AI assistance (99 plugin) | `lua/plugins/ai.lua` |
 | Code formatting rules | `lua/plugins/formatting.lua` |
 | Language-specific settings | `lua/plugins/lang/<language>.lua` |
 
@@ -185,13 +186,32 @@ vim.keymap.set('n', '<leader>sm', builtin.marks, { desc = '[S]earch [M]arks' })
 
 ### Completion Keymaps
 
-- `<C-y>` - Accept completion (blink.cmp default)
+- `<C-y>` - Accept completion
 - `<C-n>/<C-p>` or `<Up>/<Down>` - Navigate completion menu
-- `<C-Space>` - Open completion menu or docs
-- `<C-e>` - Close completion menu
-- `<Tab>/<S-Tab>` - Navigate snippet placeholders
+- `<C-Space>` - Open completion menu
+- `<C-b>/<C-f>` - Scroll documentation
+- `<C-l>/<C-h>` - Navigate snippet placeholders
 
 See `:help ins-completion` for more info on completion.
+
+### 99 AI Agent Keymaps
+
+**Note**: The 99 plugin requires OpenCode CLI to be installed and configured.
+
+| Key | Action | Mode |
+|-----|--------|------|
+| `<leader>9f` | Fill function with AI | Normal |
+| `<leader>9v` | AI assist on visual selection | Visual |
+| `<leader>9s` | Stop all AI requests | Normal |
+| `<leader>9l` | View AI request logs | Normal |
+| `<leader>9n` | Next request logs | Normal |
+| `<leader>9p` | Previous request logs | Normal |
+
+**Usage Tips:**
+- Use `<leader>9f` when cursor is inside a function to generate the body
+- Select code visually then use `<leader>9v` for AI assistance on that code
+- Type `@` in prompts to use skill-based completion (requires custom SKILL.md files)
+- View logs with `<leader>9l` to debug or understand AI responses
 
 ## Installation
 
@@ -235,6 +255,29 @@ nvim
 - Run `:checkhealth` to verify everything is working
 - Run `:Mason` to manage LSP servers, formatters, and linters
 - Run `:TSUpdate` to update treesitter parsers if needed
+
+### Setting Up 99 AI Agent
+
+The 99 plugin by ThePrimeagen requires OpenCode CLI to be installed:
+
+1. **Install OpenCode** (if not already installed):
+   - Visit: https://opencode.ai/
+   - Follow the installation instructions for your platform
+   - Configure OpenCode with your preferred AI provider
+
+2. **Verify OpenCode is working**:
+   ```bash
+   opencode --version
+   ```
+
+3. **Use 99 in Neovim**:
+   - `<leader>9f` - Fill function bodies with AI
+   - `<leader>9v` - Get AI assistance on visual selections
+   - Type `@` in AI prompts for skill-based completion
+
+4. **Optional: Create custom skills**:
+   - Create folders with SKILL.md files for custom AI behaviors
+   - Configure paths in `lua/plugins/ai.lua` under `custom_rules`
 
 ## Managing Plugins
 
