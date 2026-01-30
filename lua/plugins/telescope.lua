@@ -4,23 +4,6 @@
 return {
   'nvim-telescope/telescope.nvim',
   event = 'VimEnter',
-  pickers = {
-    find_files = {
-      follow = true, -- This enables following symlinks
-    },
-    defaults = {
-      vimgrep_arguments = {
-        'rg',
-        '--color=never',
-        '--no-heading',
-        '--with-filename',
-        '--line-number',
-        '--column',
-        '--smart-case',
-        '--no-ignore-vcs',
-      },
-    },
-  },
   dependencies = {
     'nvim-lua/plenary.nvim',
     {
@@ -65,15 +48,32 @@ return {
     -- [[ Configure Telescope ]]
     -- See `:help telescope` and `:help telescope.setup()`
     require('telescope').setup {
-      -- You can put your default mappings / updates / etc. in here
-      --  All the info you're looking for is in `:help telescope.setup()`
-      --
-      -- defaults = {
-      --   mappings = {
-      --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-      --   },
-      -- },
-      -- pickers = {}
+      defaults = {
+        -- Configure ripgrep to show hidden files and ignore .gitignore
+        vimgrep_arguments = {
+          'rg',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          '--hidden',        -- Show hidden files
+          '--no-ignore',     -- Don't respect .gitignore
+        },
+      },
+      pickers = {
+        find_files = {
+          hidden = true,         -- Show hidden files
+          no_ignore = true,      -- Don't respect .gitignore
+          follow = true,         -- Follow symlinks
+        },
+        live_grep = {
+          additional_args = function()
+            return { '--hidden', '--no-ignore' }
+          end,
+        },
+      },
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),

@@ -78,6 +78,7 @@ return {
   -- Mini statusline
   {
     'echasnovski/mini.nvim',
+    dependencies = { 'SmiteshP/nvim-navic' },
     config = function()
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
@@ -92,6 +93,21 @@ return {
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
         return '%2l:%-2v'
+      end
+
+      -- Add breadcrumbs from nvim-navic
+      ---@diagnostic disable-next-line: duplicate-set-field
+      statusline.section_filename = function()
+        local navic = require 'nvim-navic'
+        local filename = vim.fn.expand '%:t'
+        if filename == '' then
+          filename = '[No Name]'
+        end
+        local navic_location = navic.is_available() and navic.get_location() or ''
+        if navic_location ~= '' then
+          return filename .. ' > ' .. navic_location
+        end
+        return filename
       end
 
       -- ... and there is more!
@@ -132,5 +148,36 @@ return {
     event = 'VimEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },
+  },
+
+  -- Trouble.nvim - Beautiful diagnostics, references, and quickfix list
+  {
+    'folke/trouble.nvim',
+    cmd = 'Trouble',
+    opts = {},
+    keys = {
+      { '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', desc = 'Diagnostics (Trouble)' },
+      { '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', desc = 'Buffer Diagnostics (Trouble)' },
+      { '<leader>xl', '<cmd>Trouble loclist toggle<cr>', desc = 'Location List (Trouble)' },
+      { '<leader>xq', '<cmd>Trouble qflist toggle<cr>', desc = 'Quickfix List (Trouble)' },
+      { 'gR', '<cmd>Trouble lsp_references toggle<cr>', desc = 'LSP References (Trouble)' },
+    },
+  },
+
+  -- Breadcrumbs showing current code context
+  {
+    'SmiteshP/nvim-navic',
+    dependencies = 'neovim/nvim-lspconfig',
+    opts = {
+      lsp = {
+        auto_attach = true,
+        preference = nil,
+      },
+      highlight = true,
+      separator = ' > ',
+      depth_limit = 0,
+      depth_limit_indicator = '..',
+      safe_output = true,
+    },
   },
 }

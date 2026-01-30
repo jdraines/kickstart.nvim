@@ -166,8 +166,22 @@ vim.keymap.set('n', '<leader>sm', builtin.marks, { desc = '[S]earch [M]arks' })
 | `grd` | Go to definition |
 | `grr` | Go to references |
 | `gri` | Go to implementation |
+| `grt` | Go to type definition |
+| `grD` | Go to declaration |
 | `gO` | Document symbols |
+| `gW` | Workspace symbols |
+| `gR` | LSP References (Trouble) |
 | `<leader>th` | Toggle inlay hints |
+
+### Trouble.nvim Keymaps
+
+| Key | Action |
+|-----|--------|
+| `<leader>xx` | Toggle diagnostics list |
+| `<leader>xX` | Toggle buffer diagnostics |
+| `<leader>xl` | Toggle location list |
+| `<leader>xq` | Toggle quickfix list |
+| `gR` | Show references in Trouble |
 
 ### Completion Keymaps
 

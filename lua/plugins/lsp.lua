@@ -222,6 +222,9 @@ return {
         ruff = {
           capabilities = capabilities,
         },
+        jdtls = {
+          capabilities = capabilities,
+        },
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --

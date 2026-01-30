@@ -2,44 +2,7 @@
 -- Provides autocompletion, snippets, and completion sources
 
 return {
-  -- Legacy nvim-cmp setup (you have both cmp and blink.cmp configured)
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-path',
-  'L3MON4D3/LuaSnip',
-  'rafamadriz/friendly-snippets',
-  {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-      'rafamadriz/friendly-snippets',
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-    },
-    config = function()
-      local cmp = require 'cmp'
-      local luasnip = require 'luasnip'
-
-      cmp.setup {
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        sources = cmp.config.sources {
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'buffer' },
-          { name = 'path' },
-        },
-      }
-      require('luasnip.loaders.from_vscode').lazy_load()
-    end,
-  },
-
-  -- Modern blink.cmp (primary completion engine)
+  -- Modern blink.cmp completion engine
   {
     'saghen/blink.cmp',
     event = 'VimEnter',
@@ -106,9 +69,12 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          -- By default, buffer completions only show when LSP returns no items
+          -- Remove the fallback to show buffer completions alongside LSP
+          lsp = { fallbacks = {} },
         },
       },
 

@@ -8,10 +8,6 @@ require 'config'
 -- Late-stage configuration (things that must run after plugins load)
 -- These are kept here per user preference
 
--- Configure telescope to show hidden files and ignore .gitignore
-require('telescope.builtin').find_files { hidden = true, additional_args = { '--no-ignore' } }
-require('telescope.builtin').live_grep { hidden = true, additional_args = { '--no-ignore' } }
-
 -- Auto-open neo-tree on startup
 vim.cmd 'Neotree filesystem reveal left'
 
