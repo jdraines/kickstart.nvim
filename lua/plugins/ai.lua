@@ -24,6 +24,8 @@ return {
           print_on_error = true,
         },
 
+        model = 'anthropic/claude-sonnet-4-5',
+
         -- Completion configuration for @ skill tags
         completion = {
           -- Defaults to .cursor/rules
